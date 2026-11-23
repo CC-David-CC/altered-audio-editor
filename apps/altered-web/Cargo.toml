@@ -1,0 +1,38 @@
+# Playground's browser build of Altered Audio Editor (patches/audition.yaml in github.com/daijro/openplayground): the
+# back end in src-tauri as a WASI module the page runs (apps/altered-web/js), with Tauri replaced by stand-ins/.
+# scripts/build-web.sh builds it for wasm32-wasip1 and the interface around it with Vite.
+[package]
+name = "altered-web"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+altered-audio-editor = { path = "../../src-tauri" }
+altered-playground = { path = "playground" }
+tauri = { path = "stand-ins/tauri" }
+tauri-plugin-dialog = { path = "stand-ins/tauri-plugin-dialog" }
+serde_json = "1"
+
+[workspace]
+
+[patch.crates-io]
+tauri = { path = "stand-ins/tauri" }
+tauri-build = { path = "stand-ins/tauri-build" }
+tauri-plugin-dialog = { path = "stand-ins/tauri-plugin-dialog" }
+tauri-plugin-opener = { path = "stand-ins/tauri-plugin-opener" }
+tauri-plugin-updater = { path = "stand-ins/tauri-plugin-updater" }
+libloading = { path = "stand-ins/libloading" }
+# src-tauri's own patch, which only its workspace sees.
+opus-decoder = { path = "../../src-tauri/vendor/opus-decoder" }
+
+[profile.release]
+opt-level = 3
+debug = false
+panic = "abort"
+codegen-units = 1
+lto = true

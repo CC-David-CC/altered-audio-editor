@@ -1,0 +1,11 @@
+# Playground's browser build of Altered Audio Editor (patches/audition.yaml in github.com/daijro/openplayground): the
+# part of tauri-plugin-opener its back end uses, standing in for the real crate (see ../tauri).
+[package]
+name = "tauri-plugin-opener"
+version = "2.99.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+
+[dependencies]
+tauri = { path = "../tauri" }

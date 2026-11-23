@@ -1,0 +1,8 @@
+# Playground's browser build of Altered Audio Editor (patches/audition.yaml in github.com/daijro/openplayground): a page
+# loads no shared libraries, so VST3 plug-ins (src-tauri/plughost) never load. Stands in for the real crate.
+[package]
+name = "libloading"
+version = "0.8.99"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false

@@ -117,6 +117,9 @@ pub struct NewSessionOptions {
 /// Default folder for new sessions: Documents/Altered Audio/Sessions.
 #[tauri::command]
 pub fn session_default_folder(app: AppHandle) -> Result<PathBuf, String> {
+    // Playground's browser build: at the top of Files, each session in its own folder (patches/audition.yaml).
+    #[cfg(target_arch = "wasm32")]
+    return Ok(PathBuf::from("/"));
     let paths = app.path();
     let docs = paths
         .document_dir()

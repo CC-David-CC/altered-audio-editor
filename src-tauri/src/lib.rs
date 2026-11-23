@@ -41,6 +41,7 @@ pub fn run() {
                 // changed launch, and always one before the first launch of a new version.
                 if let Ok(backups) = paths::backups_dir(app.handle()) {
                     let (config, version) = (dir.clone(), app.package_info().version.to_string());
+                    #[cfg(not(target_arch = "wasm32"))]
                     std::thread::spawn(move || backup::on_launch(&config, &backups, &version));
                 }
                 plugins::load(&dir);

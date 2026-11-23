@@ -1,0 +1,8 @@
+# Playground's browser build of Altered Audio Editor (patches/audition.yaml in github.com/daijro/openplayground): the
+# page's audio for the back end's playback and recording, which run without threads in a browser (see src/lib.rs).
+[package]
+name = "altered-playground"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false

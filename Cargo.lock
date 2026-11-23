@@ -1,0 +1,1 @@
+# Playground: build.mjs reads the wasm-bindgen version from here; this build uses none (scripts/build-web.sh).

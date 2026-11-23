@@ -1,0 +1,14 @@
+# Playground's browser build of Altered Audio Editor (patches/audition.yaml in github.com/daijro/openplayground): the
+# part of Tauri 2 its back end uses, standing in for the real crate through apps/altered-web's [patch.crates-io].
+# Commands are called from the page (apps/altered-web/src/lib.rs), not over Tauri's IPC.
+[package]
+name = "tauri"
+version = "2.99.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+publish = false
+
+[dependencies]
+playground-tauri-macros = { path = "../tauri-macros" }
+serde = "1"
+serde_json = "1"

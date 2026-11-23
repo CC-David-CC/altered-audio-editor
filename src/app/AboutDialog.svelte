@@ -6,7 +6,7 @@
   Help > About.
 -->
 <script lang="ts">
-  import logo from "../assets/logo-dark.png";
+  import logo from "../../apps/altered-web/logo.svg";
 
   interface Props {
     version: string | null;
@@ -24,6 +24,7 @@
     <img class="logo" src={logo} alt="" width="372" height="134" />
     <h1 id="about-title" class="visually-hidden">Altered Audio Editor</h1>
     <p class="version">Version {version ?? "unknown"}</p>
+    <p>Based on Altered Audio Editor by The GeekCast Radio Network, built for the browser by Playground.</p>
     <p>A free, open-source multitrack audio editor for podcasters and voiceover.</p>
     <p class="privacy">
       No account, no sign-in, no telemetry, no tracking. The app goes online only when you pick Help > Check for Updates or a link

@@ -16,6 +16,10 @@ fn take_dir(app: &AppHandle, open: &State<'_, OpenSession>) -> Result<PathBuf, S
     let saved = open.0.lock().map_err(|e| e.to_string())?.path.clone();
     match saved.as_ref().and_then(|p| p.parent()) {
         Some(dir) => Ok(dir.join("Recordings")),
+        // Playground's browser build: in Files, so the takes outlive the page (patches/audition.yaml).
+        #[cfg(target_arch = "wasm32")]
+        None => Ok(PathBuf::from("/Recordings")),
+        #[cfg(not(target_arch = "wasm32"))]
         None => Ok(crate::commands::cache::cache_root(app)?.join("recordings")),
     }
 }

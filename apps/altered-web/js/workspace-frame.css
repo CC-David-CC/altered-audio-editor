@@ -1,0 +1,5 @@
+#app {
+  position: fixed;
+  inset: var(--pg-bar, 0px) 0 0 0;
+  height: auto !important;
+}

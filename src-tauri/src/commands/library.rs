@@ -18,6 +18,9 @@ use crate::library::{Library, LibraryItem};
 /// Where new libraries go by default: Documents/Altered Audio/Libraries.
 #[tauri::command]
 pub fn library_default_root(app: AppHandle) -> Result<PathBuf, String> {
+    // Playground's browser build: in Files (patches/audition.yaml).
+    #[cfg(target_arch = "wasm32")]
+    return Ok(PathBuf::from("/Libraries"));
     let docs = app
         .path()
         .document_dir()

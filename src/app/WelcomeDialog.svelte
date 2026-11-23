@@ -12,6 +12,7 @@
   }
 
   const { onGuide, onClose }: Props = $props();
+  const inWebOS = Boolean((window.frameElement as (HTMLIFrameElement & { retakeFiles?: unknown }) | null)?.retakeFiles);
 </script>
 
 <svelte:window onkeydown={(e) => e.key === "Escape" && onClose()} />
@@ -19,7 +20,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 <div class="backdrop" onclick={onClose}>
   <div class="dialog" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="welcome-title" onclick={(e) => e.stopPropagation()}>
-    <h1 id="welcome-title">Welcome to Altered Audio Editor</h1>
+    <h1 id="welcome-title">{inWebOS ? "Welcome to Retake" : "Welcome to Altered Audio Editor"}</h1>
     <p>A free audio editor for podcasters and voiceover. Your first episode:</p>
     <ol>
       <li>File > New Session, then File > Import Files (or drag files in).</li>
@@ -27,7 +28,11 @@
       <li>Add effects in the Voice Chain (Window > Voice Chain).</li>
       <li>File > Export > Session Mixdown when it sounds right.</li>
     </ol>
-    <p class="fine">No account, no tracking. Your audio stays on your computer. You can reopen the guide any time from Help > User Guide.</p>
+    {#if inWebOS}
+      <p class="fine">Retake opens and saves audio in your WebOS Files workspace. You can reopen the guide from Help > User Guide.</p>
+    {:else}
+      <p class="fine">No account, no tracking. Your audio stays on your computer. You can reopen the guide any time from Help > User Guide.</p>
+    {/if}
     <div class="actions">
       <button type="button" onclick={onGuide}>Open the User Guide</button>
       <button type="button" class="primary" onclick={onClose}>Start Editing</button>

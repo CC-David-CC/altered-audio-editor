@@ -42,7 +42,11 @@ pub fn disk_free(app: tauri::AppHandle, path: Option<String>) -> Option<u64> {
             return None;
         }
     }
-    fs4::available_space(&dir).ok()
+    #[cfg(not(target_arch = "wasm32"))]
+    let space = fs4::available_space(&dir).ok();
+    #[cfg(target_arch = "wasm32")]
+    let space = None;
+    space
 }
 
 /// Minimizes the main window. Called from Window > Minimize.

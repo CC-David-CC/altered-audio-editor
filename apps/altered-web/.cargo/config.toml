@@ -1,0 +1,3 @@
+# Wasm SIMD for the back end's DSP, as Playground builds its other apps (scripts/build.mjs SIMD).
+[target.wasm32-wasip1]
+rustflags = ["-Ctarget-feature=+simd128"]

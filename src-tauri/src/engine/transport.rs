@@ -564,6 +564,7 @@ fn start(session: Session, from: u64, jump: Option<Jump>) -> Result<Running, Str
     })
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 fn run(
     mut session: Session,
     from: u64,
@@ -1351,3 +1352,8 @@ mod tests {
         assert_eq!(t.stop(), None);
     }
 }
+
+// Playground's browser build: playback without threads (patches/audition.yaml).
+#[cfg(target_arch = "wasm32")] mod web;
+#[cfg(target_arch = "wasm32")] use web::run;
+#[cfg(target_arch = "wasm32")] use altered_playground::std;

@@ -197,6 +197,7 @@ impl Drop for PreviewPlayer {
 
 /// Body of the preview thread. Owns the device stream, which on some
 /// platforms must stay on the thread that created it.
+#[cfg(not(target_arch = "wasm32"))]
 fn run(input: Input, shared: Arc<Shared>, ready: mpsc::Sender<Result<u32, String>>) {
     let Some(device) = super::output::output_device_any() else {
         let _ = ready.send(Err("No audio output device found.".into()));
@@ -399,3 +400,8 @@ mod tests {
         p.stop();
     }
 }
+
+// Playground's browser build: file preview without threads (patches/audition.yaml).
+#[cfg(target_arch = "wasm32")] mod web;
+#[cfg(target_arch = "wasm32")] use web::run;
+#[cfg(target_arch = "wasm32")] use altered_playground::std;

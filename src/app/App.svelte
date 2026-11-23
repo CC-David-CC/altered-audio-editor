@@ -5250,15 +5250,15 @@
       actions.register({ id: "file.new-session", run: () => askNewSession() }),
       actions.register({ id: "file.save-template", run: () => saveAsTemplate() }),
       actions.register({ id: "file.open", run: () => openAny() }),
-      actions.register({ id: "file.save", run: () => pluginSync.captureAll().then(() => files.save()).then(() => undefined) }),
-      actions.register({ id: "file.save-as", run: () => pluginSync.captureAll().then(() => files.saveAs()).then(() => undefined) }),
+      actions.register({ id: "file.save", run: () => pluginSync.captureAll().then(() => files.save()).then(() => undefined, showError) }),
+      actions.register({ id: "file.save-as", run: () => pluginSync.captureAll().then(() => files.saveAs()).then(() => undefined, showError) }),
       actions.register({
         id: "fx.plugin-manager",
         run: () => {
           pluginManagerOpen = true;
         },
       }),
-      actions.register({ id: "file.save-all", run: () => files.save().then(() => undefined) }),
+      actions.register({ id: "file.save-all", run: () => files.save().then(() => undefined, showError) }),
       actions.register({ id: "file.close", run: () => files.close().then(() => undefined) }),
       actions.register({ id: "file.import-sesx", run: () => files.importSesx().then(() => undefined) }),
       actions.register({ id: "file.close-all", run: () => files.closeAll().then(() => undefined) }),

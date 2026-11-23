@@ -507,6 +507,8 @@ impl Recorder {
                 }
             }
         }
+        #[cfg(target_arch = "wasm32")]
+        web::finish(&mut takes, &mut first_err);
         match first_err {
             Some(e) if takes.is_empty() => Err(e),
             _ => Ok(takes),
@@ -601,6 +603,7 @@ fn silence_to_add(elapsed_frames: u64, got_frames: u64, rate: u32) -> u64 {
     }
 }
 
+#[cfg(not(target_arch = "wasm32"))]
 fn run(
     device: Option<String>,
     targets: Vec<(RecordTarget, Vec<usize>)>,
@@ -1068,3 +1071,8 @@ mod tests {
         assert_eq!(silence_to_add(0, 10, 48_000), 0);
     }
 }
+
+// Playground's browser build: recording from the page's microphone without threads (patches/audition.yaml).
+#[cfg(target_arch = "wasm32")] mod web;
+#[cfg(target_arch = "wasm32")] use web::run;
+#[cfg(target_arch = "wasm32")] use altered_playground::std;
