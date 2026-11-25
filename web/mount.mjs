@@ -47,6 +47,7 @@ export function mount(host) {
   let dirty = false;
   let transferring = false;
   let writes = Promise.resolve();
+  let welcomePreference = Promise.resolve();
   let startResolve, startReject;
   const start = new Promise((resolve, reject) => {
     startResolve = resolve;
@@ -148,6 +149,7 @@ export function mount(host) {
     ready() { startResolve(); },
     failed(message) { startReject(Error(message)); },
     setUnsaved(value) { dirty = value; },
+    waitForWelcomePreference(write) { welcomePreference = write; },
     status(message) { if (!signal.aborted) status.textContent = message; },
     close() { host.desktop.requestWindowClose?.(host.w); },
     files(path) { return listFiles(workspacePath(path, true)); },
@@ -218,6 +220,7 @@ export function mount(host) {
     focus: () => view.focus(),
     inspect: () => ({path: binding?.path ?? null, dirty}),
     async requestClose() {
+      await welcomePreference;
       await writes;
       return !dirty || host.ui.confirm('Discard unsaved changes to this session?', {confirmLabel: 'Discard', signal});
     },

@@ -2280,6 +2280,11 @@
   function closeWelcome() {
     welcomeOpen = false;
     settings.set({ ...settings.current, welcomeSeen: true });
+    const frame = window.frameElement as (HTMLIFrameElement & {
+      retakeFiles?: { waitForWelcomePreference?: (write: Promise<void>) => void };
+    }) | null;
+    // The Desktop can close this iframe before the ordinary preferences timer fires.
+    frame?.retakeFiles?.waitForWelcomePreference?.(prefs.flush());
   }
   let welcomeOpen = $state(false);
   let updateInfo = $state<UpdateInfo | null>(null);
